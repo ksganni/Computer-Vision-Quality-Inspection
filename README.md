@@ -395,7 +395,7 @@ Run tests locally:
 pytest
 ```
 
-The workflow in `.github/workflows/ci.yml` runs on pushes and pull requests to the primary branch. It:
+The workflow in `.github/workflows/ci.yml` runs on pushes and pull requests for all branches. It:
 
 1. checks out the repository;
 2. configures Python 3.11;
