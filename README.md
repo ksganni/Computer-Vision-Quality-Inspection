@@ -312,6 +312,7 @@ The interactive UI is intended for public demonstration on [Streamlit Community 
 8. Paste that URL into the **Live demo** line at the top of this README.
 
 `requirements.txt` is installed automatically (Streamlit UI + YOLO stack).
+`runtime.txt` requests Python 3.12 on Streamlit Community Cloud.
 
 For local API and tests:
 
