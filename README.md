@@ -197,9 +197,10 @@ The reported interpreter version should be Python 3.12.
 ```bash
 python -m pip install --upgrade pip
 pip install -r requirements.txt
+pip install -r requirements-dev.txt
 ```
 
-The dependency constraints intentionally use NumPy 1.x and OpenCV below 4.11 for compatibility with PyTorch 2.2 on Intel macOS.
+On Intel macOS, use `requirements-macos.txt` instead of `requirements.txt`.
 
 ### 4. Download model weights
 
@@ -310,12 +311,20 @@ The interactive UI is intended for public demonstration on [Streamlit Community 
 7. Open the app URL (typically `https://<app-name>.streamlit.app`).
 8. Paste that URL into the **Live demo** line at the top of this README.
 
-`requirements.txt` is installed automatically (CPU PyTorch wheels for Linux).
+`requirements.txt` is installed automatically (Streamlit UI + YOLO stack).
 
-For local Intel macOS development, prefer:
+For local API and tests:
+
+```bash
+pip install -r requirements.txt
+pip install -r requirements-dev.txt
+```
+
+For local Intel macOS development:
 
 ```bash
 pip install -r requirements-macos.txt
+pip install -r requirements-dev.txt
 ```
 
 ### What the public link shows

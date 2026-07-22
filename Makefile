@@ -3,7 +3,7 @@
 setup:
 	rm -rf .venv
 	python3.12 -m venv .venv
-	. .venv/bin/activate && pip install --upgrade pip && pip install -r requirements.txt
+	. .venv/bin/activate && pip install --upgrade pip && pip install -r requirements.txt && pip install -r requirements-dev.txt
 	. .venv/bin/activate && python scripts/create_sample_image.py
 	. .venv/bin/activate && python scripts/download_model.py || true
 
