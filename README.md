@@ -1,19 +1,8 @@
----
-title: Computer Vision Quality Inspection
-emoji: ◎
-colorFrom: blue
-colorTo: green
-sdk: streamlit
-sdk_version: "1.41.0"
-app_file: streamlit_app/app.py
-pinned: false
-short_description: YOLOv8 object detection with confidence-based quality assessment
----
-
 # Computer Vision Quality Inspection System
 
 An end-to-end computer vision application for image-based object detection and visual inspection. The system provides a Streamlit interface, a FastAPI inference service, YOLOv8 model integration, evaluation utilities, automated tests, containerization, and continuous integration.
 
+**Live demo:** after deploying on Streamlit Community Cloud, add your app URL here (for example `https://<app-name>.streamlit.app`).
 
 ## Overview
 
@@ -304,39 +293,31 @@ docker compose down
 
 Do not start the local Python services and Docker services on the same ports simultaneously.
 
-## Hugging Face Spaces Deployment
+## Streamlit Community Cloud Deployment
 
-The interactive Streamlit interface is intended for public demonstration on Hugging Face Spaces (free CPU tier available; Spaces may sleep when idle and can take longer on the first request while the model loads).
+The interactive UI is intended for public demonstration on [Streamlit Community Cloud](https://share.streamlit.io) (free tier available). The app may sleep when idle, and the first request can take longer while dependencies and the YOLO model load.
 
-### Space metadata
+### Deploy from GitHub
 
-This repository README includes Spaces front matter (`sdk: streamlit`, `app_file: streamlit_app/app.py`). System packages for OpenCV are listed in `packages.txt`.
-
-### Deploy from the GitHub repository
-
-1. Create an account at [https://huggingface.co](https://huggingface.co).
-2. Open [https://huggingface.co/new-space](https://huggingface.co/new-space).
-3. Set **Space SDK** to **Streamlit**.
-4. Create the Space, then choose **Import from Git repository** (or push this repository to a Space-linked remote).
-5. Confirm the Space uses:
-   - `app_file`: `streamlit_app/app.py`
-   - `requirements.txt` for Python packages
-   - `packages.txt` for `libgl1` and `libglib2.0-0`
+1. Push this repository to GitHub (public or private).
+2. Open [https://share.streamlit.io](https://share.streamlit.io) and sign in with GitHub.
+3. Click **Create app** / **New app**.
+4. Select:
+   - **Repository:** your `computer-vision-quality-inspection` repo
+   - **Branch:** `main` (or your deployment branch)
+   - **Main file path:** `streamlit_app/app.py`
+5. Click **Deploy**.
 6. Wait for the build to finish. The first start downloads `yolov8n.pt` automatically.
-7. Open the Space URL and verify inference on the Street scene / People samples.
-8. Add the Space URL under **Live demo** at the top of this README.
+7. Open the app URL (typically `https://<app-name>.streamlit.app`).
+8. Paste that URL into the **Live demo** line at the top of this README.
 
-If dependency resolution fails on Spaces hardware, install from the Linux-oriented pin file:
+`requirements.txt` is installed automatically. System libraries for OpenCV are listed in `packages.txt` (`libgl1`, `libglib2.0-0`), which Streamlit Cloud can install during build.
 
-```bash
-pip install -r requirements-space.txt
-```
-
-(or copy those pins into the Space `requirements.txt`).
+If PyTorch install fails on the cloud builder, switch the cloud requirements to the Linux-oriented pins in `requirements-space.txt` (copy its contents into `requirements.txt` for the deployment branch, or point the app settings at that file if your plan supports it).
 
 ### What the public link shows
 
-The Space URL opens the Streamlit inspection UI (upload, reference images, detections, quality grade). FastAPI remains available for local and Docker use; it is not the primary Spaces entry point.
+The Streamlit Cloud URL opens the inspection UI (image upload, reference images, detections, quality grade and score). FastAPI remains available for local and Docker use; it is not deployed by Streamlit Community Cloud.
 
 ## Custom Model Training
 
