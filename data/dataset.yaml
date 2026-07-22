@@ -1,0 +1,15 @@
+# Example YOLO dataset config for custom training (Roboflow export friendly)
+# Replace paths after you download a labeled dataset.
+
+path: data/dataset
+train: images/train
+val: images/val
+
+# Example classes for fruit quality grading
+names:
+  0: fresh_apple
+  1: damaged_apple
+  2: fresh_banana
+  3: damaged_banana
+  4: fresh_orange
+  5: damaged_orange
