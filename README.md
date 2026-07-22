@@ -2,7 +2,6 @@
 
 An end-to-end computer vision application for image-based object detection and visual inspection. The system provides a Streamlit interface, a FastAPI inference service, YOLOv8 model integration, evaluation utilities, automated tests, containerization, and continuous integration.
 
-**Live demo:** after deploying on Streamlit Community Cloud, add your app URL here (for example `https://<app-name>.streamlit.app`).
 
 ## Overview
 
@@ -311,9 +310,9 @@ The interactive UI is intended for public demonstration on [Streamlit Community 
 7. Open the app URL (typically `https://<app-name>.streamlit.app`).
 8. Paste that URL into the **Live demo** line at the top of this README.
 
-`requirements.txt` is installed automatically. System libraries for OpenCV are listed in `packages.txt` (`libgl1`, `libglib2.0-0`), which Streamlit Cloud can install during build.
+`requirements.txt` is installed automatically. This project uses `opencv-python-headless`, so no extra apt packages are required for Streamlit Community Cloud.
 
-If PyTorch install fails on the cloud builder, switch the cloud requirements to the Linux-oriented pins in `requirements-space.txt` (copy its contents into `requirements.txt` for the deployment branch, or point the app settings at that file if your plan supports it).
+If PyTorch install fails on the cloud builder, use the Linux-oriented pins in `requirements-space.txt` (copy its contents into `requirements.txt` on the deployment branch).
 
 ### What the public link shows
 
