@@ -2,6 +2,7 @@
 
 An end-to-end computer vision application for image-based object detection and visual inspection. The system provides a Streamlit interface, a FastAPI inference service, YOLOv8 model integration, evaluation utilities, automated tests, containerization, and continuous integration.
 
+**Live demo:** [https://computer-vision-quality-inspection.streamlit.app/](https://computer-vision-quality-inspection.streamlit.app/)
 
 ## Overview
 
