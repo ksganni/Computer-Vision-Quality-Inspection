@@ -1,17 +1,19 @@
-# Pin carefully for Intel macOS + Python 3.12:
-# torch 2.2.x is the last Intel Mac build and needs numpy < 2
+# Primary requirements for Streamlit Community Cloud (Linux) and general use.
+# CPU wheels keep the cloud install smaller and more reliable.
+--extra-index-url https://download.pytorch.org/whl/cpu
+
 ultralytics>=8.3.0,<9
-torch>=2.2.0,<2.3
-torchvision>=0.17.0,<0.18
+torch==2.2.2
+torchvision==0.17.2
 opencv-python-headless>=4.8.0,<4.11
 numpy>=1.26.0,<2
 Pillow>=10.0.0
+streamlit>=1.32.0
+requests>=2.31.0
+pyyaml>=6.0.0
+matplotlib>=3.8.0
 fastapi>=0.110.0
 uvicorn[standard]>=0.27.0
 python-multipart>=0.0.9
-streamlit>=1.32.0
-requests>=2.31.0
 pytest>=8.0.0
 httpx>=0.27.0
-pyyaml>=6.0.0
-matplotlib>=3.8.0

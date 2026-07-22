@@ -310,9 +310,13 @@ The interactive UI is intended for public demonstration on [Streamlit Community 
 7. Open the app URL (typically `https://<app-name>.streamlit.app`).
 8. Paste that URL into the **Live demo** line at the top of this README.
 
-`requirements.txt` is installed automatically. This project uses `opencv-python-headless`, so no extra apt packages are required for Streamlit Community Cloud.
+`requirements.txt` is installed automatically (CPU PyTorch wheels for Linux).
 
-If PyTorch install fails on the cloud builder, use the Linux-oriented pins in `requirements-space.txt` (copy its contents into `requirements.txt` on the deployment branch).
+For local Intel macOS development, prefer:
+
+```bash
+pip install -r requirements-macos.txt
+```
 
 ### What the public link shows
 
