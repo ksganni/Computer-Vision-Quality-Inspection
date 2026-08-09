@@ -1,5 +1,7 @@
 # Streamlit Community Cloud / Linux runtime
 # Cloud may use Python 3.12+; torch 2.9+ provides matching wheels.
+# ultralytics depends on the full opencv-python wheel, which links against
+# libGL. See packages.txt, which installs that system library on Linux hosts.
 streamlit>=1.32.0
 ultralytics>=8.3.0,<9
 torch>=2.9.0

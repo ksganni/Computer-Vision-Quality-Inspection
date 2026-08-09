@@ -117,6 +117,8 @@ computer-vision-quality-inspection/
 ├── docker-compose.yml             # API and UI services
 ├── Makefile                       # Common development commands
 ├── pytest.ini                     # pytest configuration
+├── packages.txt                   # System libraries for Linux/cloud hosts
+├── runtime.txt                    # Python version requested by Streamlit Cloud
 └── requirements.txt               # Python dependencies
 ```
 
@@ -313,7 +315,12 @@ The interactive UI is intended for public demonstration on [Streamlit Community 
 8. Paste that URL into the **Live demo** line at the top of this README.
 
 `requirements.txt` is installed automatically (Streamlit UI + YOLO stack).
-`runtime.txt` requests Python 3.12 on Streamlit Community Cloud.
+`runtime.txt` requests Python 3.12, though Streamlit Community Cloud may ignore
+it and provision a newer interpreter; the pinned dependency ranges resolve on
+both.
+`packages.txt` installs `libgl1`, a system library required by the full
+`opencv-python` wheel that `ultralytics` declares as a dependency. Without it,
+`import cv2` fails at application start with an `ImportError`.
 
 For local API and tests:
 
