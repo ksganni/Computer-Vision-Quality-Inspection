@@ -7,7 +7,6 @@ from pathlib import Path
 
 import cv2
 import streamlit as st
-import streamlit.components.v1 as components
 
 # Allow importing the app package when running: streamlit run streamlit_app/app.py
 PROJECT_ROOT = Path(__file__).resolve().parent.parent
@@ -232,9 +231,7 @@ st.markdown(
 }
 
 /* Animated node-network canvas: pinned behind all content */
-[data-testid="stMain"] iframe,
-iframe[title="st.iframe"],
-[data-testid="stIFrame"] {
+canvas#net {
     position: fixed !important;
     inset: 0 !important;
     width: 100vw !important;
@@ -243,10 +240,9 @@ iframe[title="st.iframe"],
     border: none !important;
     pointer-events: none !important;
     background: transparent !important;
-    color-scheme: normal;
 }
-/* Collapse the empty element slot left by the pinned iframe */
-[data-testid="stElementContainer"]:has(> iframe) {
+/* Collapse the empty element slot left by the pinned canvas */
+[data-testid="stElementContainer"]:has(canvas#net) {
     height: 0 !important;
     min-height: 0 !important;
     margin: 0 !important;
@@ -260,16 +256,16 @@ iframe[title="st.iframe"],
 
 # Animated background: drifting feature points connected by graph edges,
 # representing keypoint matching in a computer vision pipeline.
-components.html(
+st.html(
     """
 <canvas id="net"></canvas>
-<style>
-  html, body { margin: 0; padding: 0; background: transparent; overflow: hidden; }
-  #net { display: block; width: 100vw; height: 100vh; background: transparent; }
-</style>
 <script>
 (function () {
   const canvas = document.getElementById("net");
+  // The element is re-rendered on some reruns; only one loop per canvas node.
+  if (!canvas || canvas.dataset.started) return;
+  canvas.dataset.started = "1";
+
   const ctx = canvas.getContext("2d");
   let w, h, nodes;
 
@@ -294,6 +290,9 @@ components.html(
   }
 
   function step() {
+    // Abandon the loop if Streamlit replaced the canvas on a rerun.
+    if (!canvas.isConnected) return;
+
     ctx.clearRect(0, 0, w, h);
 
     for (const n of nodes) {
@@ -348,7 +347,7 @@ components.html(
 })();
 </script>
 """,
-    height=0,
+    unsafe_allow_javascript=True,
 )
 
 
@@ -453,11 +452,11 @@ def render_results(image_bytes: bytes, result: dict) -> None:
     col1, col2 = st.columns(2)
     with col1:
         st.markdown('<div class="panel-caption">Input Image</div>', unsafe_allow_html=True)
-        st.image(image_bytes, use_container_width=True)
+        st.image(image_bytes, width="stretch")
     with col2:
         st.markdown('<div class="panel-caption">Annotated Detections</div>', unsafe_allow_html=True)
         rgb = cv2.cvtColor(result["annotated_image"], cv2.COLOR_BGR2RGB)
-        st.image(rgb, use_container_width=True)
+        st.image(rgb, width="stretch")
 
     m1, m2, m3 = st.columns(3)
     m1.markdown(metric_card("Quality Grade", str(result["quality_grade"])), unsafe_allow_html=True)
@@ -472,7 +471,7 @@ def render_results(image_bytes: bytes, result: dict) -> None:
 
     if result["detections"]:
         st.markdown('<div class="section-title">Detection Table</div>', unsafe_allow_html=True)
-        st.dataframe(result["detections"], use_container_width=True)
+        st.dataframe(result["detections"], width="stretch")
     else:
         st.info(
             "No matching objects were detected. Select the **Street scene** or **People** "
@@ -487,10 +486,10 @@ with st.sidebar:
 
     nav1, nav2 = st.columns(2)
     with nav1:
-        if st.button("Inspection", use_container_width=True):
+        if st.button("Inspection", width="stretch"):
             st.session_state["page"] = "Inspection"
     with nav2:
-        if st.button("About", use_container_width=True):
+        if st.button("About", width="stretch"):
             st.session_state["page"] = "About"
     page = st.session_state["page"]
 
@@ -520,11 +519,11 @@ with st.sidebar:
         for item in samples:
             path: Path = item["path"]
             with st.expander(item["title"], expanded=False):
-                st.image(str(path), use_container_width=True)
+                st.image(str(path), width="stretch")
                 st.caption(item["blurb"])
                 c1, c2 = st.columns(2)
                 with c1:
-                    if st.button("Analyze", key=f"use_{path.name}", use_container_width=True):
+                    if st.button("Analyze", key=f"use_{path.name}", width="stretch"):
                         # Reset the file uploader so a previous upload cannot override the sample
                         st.session_state["uploader_reset"] = (
                             st.session_state.get("uploader_reset", 0) + 1
@@ -543,7 +542,7 @@ with st.sidebar:
                         file_name=path.name,
                         mime="image/jpeg",
                         key=f"dl_{path.name}",
-                        use_container_width=True,
+                        width="stretch",
                     )
 
 
