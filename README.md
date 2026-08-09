@@ -318,9 +318,12 @@ The interactive UI is intended for public demonstration on [Streamlit Community 
 `runtime.txt` requests Python 3.12, though Streamlit Community Cloud may ignore
 it and provision a newer interpreter; the pinned dependency ranges resolve on
 both.
-`packages.txt` installs `libgl1`, a system library required by the full
-`opencv-python` wheel that `ultralytics` declares as a dependency. Without it,
-`import cv2` fails at application start with an `ImportError`.
+`packages.txt` installs `libgl1` and `libglib2.0-0t64`, system libraries
+required by the full `opencv-python` wheel that `ultralytics` declares as a
+dependency. Without them, `import cv2` fails at application start with an
+`ImportError`. The glib package must be named `libglib2.0-0t64`: the build
+image runs Debian trixie, where the plain `libglib2.0-0` name resolves to an
+older Debian bullseye build whose dependencies cannot be satisfied.
 
 For local API and tests:
 
