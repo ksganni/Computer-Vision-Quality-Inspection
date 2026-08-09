@@ -4,6 +4,8 @@ An end-to-end computer vision application for image-based object detection and v
 
 **Live demo:** [https://computer-vision-quality-inspection.streamlit.app/](https://computer-vision-quality-inspection.streamlit.app/)
 
+**Video walkthrough:** [https://youtu.be/Q--L_X0D3fg](https://youtu.be/Q--L_X0D3fg)
+
 ## Overview
 
 Visual inspection is widely used in manufacturing, agriculture, infrastructure monitoring, recycling, and logistics. Manual inspection is difficult to scale, introduces operator variability, and may fail to identify subtle or infrequent defects.
